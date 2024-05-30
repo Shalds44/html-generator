@@ -4,7 +4,7 @@ const openai = new OpenAI();
 
 export async function run() {
     const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turb",
+        model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: "Qui es-tu ?" }]
     });
     return completion.choices[0]

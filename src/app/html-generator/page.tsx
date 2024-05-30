@@ -7,13 +7,11 @@ async function clickGenerateHtml(e:any){
 
 
 export default async function htmlGenerator(){
-    const response = await run()
-    console.log(response)
+    // const response = await run()
+    // console.log(response)
     return (
-    <div>
-        <div>
-            <p>sss</p>
-        </div>
-    </div>
+        <main className="flex flex-col  mt-5">
+        <h3 className="text-3xl font-bold">Html-generator</h3>
+      </main>
     )
 }
