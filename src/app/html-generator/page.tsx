@@ -1,27 +1,37 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react'
-// import {run, test} from '@/app/lib/open-ai-api'
+import {askGpt} from '@/app/lib/open-ai-api'
 
+export default function HtmlGenerator(){
+    const [responseGpt, setResponseGpt] = useState("initial");
+    const [responseHtml, setResponseHtml] = useState("initialHtml")
 
-
-export default function htmlGenerator(){
-    const [toggledisplay, setToggledisplay] = useState("initial")
-
-    function clickGenerateHtml(){
-        if(toggledisplay == "initial"){
-            setToggledisplay("changer")
-        }else{
-            setToggledisplay("initial")
-        }
+    async function clickGenerateHtmlGpt(){
+        const response = await askGpt();
+        setResponseGpt(response.message.content)
     }
 
-    // const response = await run()
-    // console.log(response)
+    async function clickGenerateHtml(){
+        const exempleHtml = `
+        <div class="flex flex-col mt-5">
+          <p>First paragraph</p>
+          <p>Second paragraph</p>
+          <p>Third paragraph</p>
+        </div>`;
+        setResponseHtml(exempleHtml)
+    }
+
     return (
-        <main className="flex flex-col  mt-5">
+        <main className="flex flex-col mt-5">
         <h3 className="text-3xl font-bold">Html-generator</h3>
-        <button className='btn btn-primary btn-lg bg-gray-300 w-24 my-8' onClick={clickGenerateHtml} type='button'>Generate</button>
-        <p>{toggledisplay}</p>
+        <button className='btn btn-primary btn-lg bg-gray-300 w-24 my-8' onClick={clickGenerateHtmlGpt} type='button'>
+            GenerateGpt
+        </button>
+        {responseGpt && <div dangerouslySetInnerHTML={{ __html: responseGpt }} />}
+        <button className='btn btn-primary btn-lg bg-gray-300 w-24 my-8' onClick={clickGenerateHtml} type='button'>
+            GenerateHtml
+        </button>
+        {responseHtml && <div dangerouslySetInnerHTML={{ __html: responseHtml }} />}
       </main>
     )
 }
